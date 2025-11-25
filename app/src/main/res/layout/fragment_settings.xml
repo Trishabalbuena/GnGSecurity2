@@ -1,59 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Settings"
-            android:textSize="24sp"
-            android:textColor="@color/primary"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp"/>
-
-        <!-- Notification Settings -->
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/notifications_switch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Enable Notifications"
-            android:textColor="@color/on_surface"
-            android:textSize="18sp"
-            android:checked="true"
-            android:paddingBottom="16dp"/>
-
-        <!-- Default Alarm Sound -->
-        <TextView
-            android:id="@+id/alarm_sound_setting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Default Alarm Sound"
-            android:textColor="@color/on_surface"
-            android:textSize="18sp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:background="?attr/selectableItemBackground"/>
-
-        <!-- PIN Code Settings -->
-        <TextView
-            android:id="@+id/pin_code_setting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PIN Code Settings"
-            android:textColor="@color/on_surface"
-            android:textSize="18sp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:background="?attr/selectableItemBackground"/>
-
-    </LinearLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
