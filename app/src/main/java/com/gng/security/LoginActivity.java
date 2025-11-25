@@ -8,14 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginBtn, registerBtn;
-    private TextView googleLogin, facebookLogin, appleLogin;
+    private ImageButton googleLogin, facebookLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         registerBtn = findViewById(R.id.registerBtn);
         googleLogin = findViewById(R.id.googleLogin);
         facebookLogin = findViewById(R.id.facebookLogin);
-        appleLogin = findViewById(R.id.appleLogin);
     }
 
     private void setupClickListeners() {
@@ -40,7 +39,6 @@ public class LoginActivity extends AppCompatActivity {
 
         googleLogin.setOnClickListener(v -> signInWithGoogle());
         facebookLogin.setOnClickListener(v -> signInWithFacebook());
-        appleLogin.setOnClickListener(v -> signInWithApple());
     }
 
     private void showLoginDialog() {
@@ -94,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("GnGSecurityPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isLoggedIn", true);
-        editor.apply();
+        editor.commit(); // Use commit() for an immediate, synchronous save
 
         // Proceed to main activity
         startActivity(new Intent(this, MainActivity.class));
@@ -117,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("GnGSecurityPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isLoggedIn", true);
-        editor.apply();
+        editor.commit(); // Use commit() for an immediate, synchronous save
 
         // Proceed to main activity
         Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
@@ -133,10 +131,5 @@ public class LoginActivity extends AppCompatActivity {
     private void signInWithFacebook() {
         // TODO: Implement Facebook Sign-In
         Toast.makeText(this, "Facebook Sign-In will be implemented", Toast.LENGTH_SHORT).show();
-    }
-
-    private void signInWithApple() {
-        // TODO: Implement Apple Sign-In
-        Toast.makeText(this, "Apple Sign-In will be implemented", Toast.LENGTH_SHORT).show();
     }
 }

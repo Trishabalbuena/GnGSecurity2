@@ -4,161 +4,129 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:padding="20dp">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center_horizontal"
+        android:padding="24dp">
 
         <!-- App Logo/Header -->
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GnG Security"
+            android:textAppearance="?attr/textAppearanceHeadline4"
             android:textColor="@color/primary"
-            android:textSize="32sp"
             android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="50dp"
-            android:layout_marginTop="40dp" />
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="48dp" />
 
         <!-- Login Card -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="8dp"
-            android:background="@color/surface">
+            app:cardBackgroundColor="@color/surface">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="30dp">
+                android:padding="24dp">
 
                 <!-- Title -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Welcome Back"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textColor="@color/primary"
-                    android:textSize="24sp"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:layout_marginBottom="30dp" />
+                    android:layout_marginBottom="24dp" />
 
                 <!-- Login Button -->
                 <Button
                     android:id="@+id/loginBtn"
+                    style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
                     android:text="Log In"
-                    android:background="@color/primary"
-                    android:textColor="@color/surface"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="15dp" />
+                    android:textAppearance="?attr/textAppearanceButton"
+                    android:layout_marginBottom="8dp" />
 
                 <!-- Register Button -->
                 <Button
                     android:id="@+id/registerBtn"
+                    style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
                     android:text="Register"
-                    android:background="@color/surface"
-                    android:textColor="@color/primary"
-                    android:textSize="16sp"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_marginBottom="30dp" />
+                    android:textAppearance="?attr/textAppearanceButton" />
 
                 <!-- Divider -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/light_gray"
-                    android:layout_marginBottom="30dp" />
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp" />
 
                 <!-- Social Login Title -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Or continue with"
+                    android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="@color/light_gray"
-                    android:textSize="14sp"
                     android:gravity="center"
-                    android:layout_marginBottom="20dp" />
+                    android:layout_marginBottom="16dp" />
 
                 <!-- Social Login Options -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center"
-                    android:weightSum="3">
+                    android:gravity="center">
 
-                    <!-- Google -->
-                    <TextView
+                    <ImageButton
                         android:id="@+id/googleLogin"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Google"
-                        android:textColor="@color/primary"
-                        android:textSize="14sp"
-                        android:gravity="center"
-                        android:padding="12dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true" />
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:src="@drawable/ic_google_logo"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:scaleType="fitCenter"
+                        android:layout_marginEnd="16dp"/>
 
-                    <!-- Facebook -->
-                    <TextView
+                    <ImageButton
                         android:id="@+id/facebookLogin"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Facebook"
-                        android:textColor="@color/primary"
-                        android:textSize="14sp"
-                        android:gravity="center"
-                        android:padding="12dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true" />
-
-                    <!-- Apple -->
-                    <TextView
-                        android:id="@+id/appleLogin"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Apple"
-                        android:textColor="@color/primary"
-                        android:textSize="14sp"
-                        android:gravity="center"
-                        android:padding="12dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true" />
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:src="@drawable/ic_facebook_logo"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:scaleType="fitCenter"
+                        android:layout_marginStart="16dp"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- App Tagline -->
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="Guard your world in a smart way"
-            android:textColor="@color/light_gray"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:layout_marginTop="20dp" />
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/light_gray" />
 
     </LinearLayout>
 

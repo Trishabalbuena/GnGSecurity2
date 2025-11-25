@@ -4,88 +4,85 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:padding="20dp">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="24dp">
 
         <!-- App Header -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="GnG Security"
+            android:textAppearance="?attr/textAppearanceHeadline4"
             android:textColor="@color/primary"
-            android:textSize="28sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp" />
 
         <!-- Declaration Card -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            android:background="@color/surface">
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/surface">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android.padding="20dp">
+                android:padding="24dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Declaration and Terms"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="@color/primary"
-                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="15dp" />
+                    android:layout_marginBottom="16dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="In order to provide basic services, the application needs following permissions to keep running:"
-                    android:textColor="@color/on_surface"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="15dp" />
+                    android:text="In order to provide basic services, the application needs the following permissions to keep running:"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:layout_marginBottom="16dp" />
 
                 <!-- Permissions List -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginBottom="16dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="• Get mobile device information"
-                        android:textColor="@color/on_surface"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="5dp" />
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:layout_marginBottom="4dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="  Used for Alarm message service"
-                        android:textColor="@color/light_gray"
-                        android:textSize="12sp"
-                        android:layout_marginBottom="10dp" />
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="@color/light_gray" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Please read carefully and fully understand the &amp;quot;User Agreement&amp;quot; and &amp;quot;Privacy Policy&amp;quot;"
-                    android:textColor="@color/on_surface"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="15dp" />
+                    android:text="Please read carefully and fully understand the &quot;User Agreement&quot; and &quot;Privacy Policy&quot;"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:layout_marginBottom="16dp" />
 
                 <!-- Agreement Checkbox -->
                 <CheckBox
@@ -93,42 +90,41 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="I have read and agree to the terms and conditions"
-                    android:textColor="@color/on_surface"
-                    android:buttonTint="@color/primary" />
+                    android:textAppearance="?attr/textAppearanceBody2" />
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:orientation="horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/disagreeBtn"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="8dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
                 android:text="Disagree"
-                android:background="@color/light_gray"
-                android:textColor="@color/on_surface"
-                android:textSize="16sp"
-                style="@style/Widget.AppCompat.Button.Borderless" />
+                android:textAppearance="?attr/textAppearanceButton" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/agreeBtn"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="10dp"
-                android:text="Agree &amp; Continue"
-                android:background="@color/primary"
-                android:textColor="@color/surface"
-                android:textSize="16sp" />
+                android:layout_marginStart="8dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:text="Agree"
+                android:textAppearance="?attr/textAppearanceButton" />
 
         </LinearLayout>
 
