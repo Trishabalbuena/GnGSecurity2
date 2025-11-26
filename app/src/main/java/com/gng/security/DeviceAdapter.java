@@ -14,10 +14,12 @@ import java.util.List;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder> {
 
-    private List<String> deviceList;
+    private final List<String> deviceList;
+    private final DeviceInteractionListener listener;
 
-    public DeviceAdapter(List<String> deviceList) {
+    public DeviceAdapter(List<String> deviceList, DeviceInteractionListener listener) {
         this.deviceList = deviceList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -33,7 +35,8 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
         holder.deviceName.setText(deviceName);
 
         holder.deviceMenu.setOnClickListener(v -> {
-            DeviceSettingsBottomSheetFragment bottomSheet = new DeviceSettingsBottomSheetFragment();
+            DeviceSettingsBottomSheetFragment bottomSheet = DeviceSettingsBottomSheetFragment.newInstance(deviceName);
+            bottomSheet.setListener(listener);
             bottomSheet.show(((AppCompatActivity) v.getContext()).getSupportFragmentManager(), bottomSheet.getTag());
         });
     }

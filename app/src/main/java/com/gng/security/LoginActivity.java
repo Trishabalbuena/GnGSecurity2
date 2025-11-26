@@ -20,6 +20,16 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check if user is already logged in
+        SharedPreferences sharedPreferences = getSharedPreferences("GnGSecurityPrefs", MODE_PRIVATE);
+        if (sharedPreferences.getBoolean("isLoggedIn", false)) {
+            // User is already logged in, go straight to MainActivity
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+            return; // Important to prevent the rest of onCreate from running
+        }
+
         setContentView(R.layout.activity_login);
 
         initializeViews();
@@ -88,11 +98,12 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Save the login state
+        // Save the login state and signal that the notification dialog should be shown
         SharedPreferences sharedPreferences = getSharedPreferences("GnGSecurityPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isLoggedIn", true);
-        editor.commit(); // Use commit() for an immediate, synchronous save
+        editor.putBoolean("isNewUser", true); // Setting this to true will trigger the dialog
+        editor.apply();
 
         // Proceed to main activity
         startActivity(new Intent(this, MainActivity.class));
@@ -111,11 +122,12 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Save the login state
+        // Save the login state and mark as new user
         SharedPreferences sharedPreferences = getSharedPreferences("GnGSecurityPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isLoggedIn", true);
-        editor.commit(); // Use commit() for an immediate, synchronous save
+        editor.putBoolean("isNewUser", true);
+        editor.apply();
 
         // Proceed to main activity
         Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
