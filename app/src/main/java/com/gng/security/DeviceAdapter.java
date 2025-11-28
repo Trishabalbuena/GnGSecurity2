@@ -35,14 +35,19 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
         holder.deviceName.setText(deviceName);
 
         holder.deviceMenu.setOnClickListener(v -> {
-            DeviceSettingsBottomSheetFragment bottomSheet = DeviceSettingsBottomSheetFragment.newInstance(deviceName);
-            bottomSheet.setListener(listener);
-            bottomSheet.show(((AppCompatActivity) v.getContext()).getSupportFragmentManager(), bottomSheet.getTag());
+            if (v.getContext() instanceof AppCompatActivity) {
+                DeviceSettingsBottomSheetFragment bottomSheet = DeviceSettingsBottomSheetFragment.newInstance(deviceName);
+                bottomSheet.setListener(listener);
+                bottomSheet.show(((AppCompatActivity) v.getContext()).getSupportFragmentManager(), bottomSheet.getTag());
+            }
         });
     }
 
     @Override
     public int getItemCount() {
+        if (deviceList == null) {
+            return 0;
+        }
         return deviceList.size();
     }
 

@@ -60,26 +60,28 @@ public class DeviceSettingsBottomSheetFragment extends BottomSheetDialogFragment
             removeDevice(deviceName);
             Toast.makeText(getContext(), deviceName + " disconnected", Toast.LENGTH_SHORT).show();
             if (listener != null) {
-                listener.onDeviceRemoved();
+                listener.onDeviceRemoved(deviceName);
             }
             dismiss();
         });
     }
 
     private void removeDevice(String deviceName) {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("GnGSecurityPrefs", Context.MODE_PRIVATE);
+        Context context = getContext();
+        if (context == null) return;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("GnGSecurityPrefs", Context.MODE_PRIVATE);
         String json = sharedPreferences.getString("deviceList", null);
         if (json == null) {
             return;
         }
         Type type = new TypeToken<ArrayList<String>>() {}.getType();
         List<String> deviceList = new Gson().fromJson(json, type);
-
-        deviceList.remove(deviceName);
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String newJson = new Gson().toJson(deviceList);
-        editor.putString("deviceList", newJson);
-        editor.apply();
+        if (deviceList != null) {
+            deviceList.remove(deviceName);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            String newJson = new Gson().toJson(deviceList);
+            editor.putString("deviceList", newJson);
+            editor.apply();
+        }
     }
 }

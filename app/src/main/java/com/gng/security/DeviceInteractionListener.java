@@ -1,5 +1,5 @@
 package com.gng.security;
 
 public interface DeviceInteractionListener {
-    void onDeviceRemoved();
+    void onDeviceRemoved(String deviceName);
 }
