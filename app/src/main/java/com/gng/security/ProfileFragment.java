@@ -16,6 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -23,11 +26,22 @@ public class ProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
     private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
+
+        // Configure Google Sign In to get the client
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        if (getActivity() != null) {
+            mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+        }
+
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -47,6 +61,13 @@ public class ProfileFragment extends Fragment {
 
         // Sign out from Firebase
         mAuth.signOut();
+
+        // Sign out from Google
+        if (mGoogleSignInClient != null) {
+            mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(), task -> {
+                Log.d(TAG, "Google Sign-out successful.");
+            });
+        }
 
         // Clear SharedPreferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("GnGSecurityPrefs", Context.MODE_PRIVATE);
@@ -87,7 +108,7 @@ public class ProfileFragment extends Fragment {
                         logoutUser(); // Logout after successful deletion
                     } else {
                         Log.w(TAG, "Error deleting account.", task.getException());
-                        Toast.makeText(getContext(), "Failed to delete account. Please try again later.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Failed to delete account. Please try logging in again before deleting.", Toast.LENGTH_LONG).show();
                     }
                 });
     }

@@ -180,7 +180,6 @@ public class HomeFragment extends Fragment implements DeviceInteractionListener 
         EditText createPincode = dialogView.findViewById(R.id.create_pincode_input);
         EditText confirmPincode = dialogView.findViewById(R.id.confirm_pincode_input);
         Button saveButton = dialogView.findViewById(R.id.save_button);
-        Button cancelButton = dialogView.findViewById(R.id.cancel_button);
 
         saveButton.setOnClickListener(v -> {
             String pincode = createPincode.getText().toString();
@@ -200,8 +199,7 @@ public class HomeFragment extends Fragment implements DeviceInteractionListener 
             Toast.makeText(getContext(), "Device \"" + deviceName + "\" added successfully!", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
-
-        cancelButton.setOnClickListener(v -> dialog.dismiss());
+        
         dialog.setCancelable(false);
         dialog.show();
     }

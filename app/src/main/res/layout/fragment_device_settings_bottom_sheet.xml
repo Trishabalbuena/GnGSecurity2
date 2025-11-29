@@ -46,6 +46,14 @@
     </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/reset_pincode_button"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reset Pincode"
+        android:layout_marginBottom="8dp"/>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/disconnect_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
