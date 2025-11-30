@@ -136,10 +136,11 @@ public class DeviceSettingsBottomSheetFragment extends BottomSheetDialogFragment
     }
 
     private void removeDevice(String deviceName) {
+        FirebaseUser user = mAuth.getCurrentUser();
         Context context = getContext();
-        if (context == null) return;
+        if (context == null || user == null) return;
         SharedPreferences sharedPreferences = context.getSharedPreferences("GnGSecurityPrefs", Context.MODE_PRIVATE);
-        String json = sharedPreferences.getString("deviceList", null);
+        String json = sharedPreferences.getString("deviceList_" + user.getUid(), null);
         if (json == null) {
             return;
         }
@@ -149,17 +150,18 @@ public class DeviceSettingsBottomSheetFragment extends BottomSheetDialogFragment
             deviceList.remove(deviceName);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             String newJson = new Gson().toJson(deviceList);
-            editor.putString("deviceList", newJson);
-            editor.remove("pincode_" + deviceName); // Also remove the pincode
+            editor.putString("deviceList_" + user.getUid(), newJson);
+            editor.remove("pincode_" + user.getUid() + "_" + deviceName); // Also remove the pincode
             editor.apply();
         }
     }
 
     private void savePincode(String deviceName, String pincode) {
-        if (getContext() == null) return;
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (getContext() == null || user == null) return;
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("GnGSecurityPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("pincode_" + deviceName, pincode);
+        editor.putString("pincode_" + user.getUid() + "_" + deviceName, pincode);
         editor.apply();
     }
 }

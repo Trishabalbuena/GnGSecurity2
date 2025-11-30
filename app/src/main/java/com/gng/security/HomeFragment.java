@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -35,10 +37,12 @@ public class HomeFragment extends Fragment implements DeviceInteractionListener 
     private List<String> deviceList;
     private CardView addDeviceCard;
     private FloatingActionButton addDeviceFab;
+    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -94,9 +98,10 @@ public class HomeFragment extends Fragment implements DeviceInteractionListener 
     }
 
     private boolean isPincodeCorrect(String deviceName, String enteredPin) {
-        if (getContext() == null) return false;
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (getContext() == null || user == null) return false;
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("GnGSecurityPrefs", Context.MODE_PRIVATE);
-        String savedPin = sharedPreferences.getString("pincode_" + deviceName, null);
+        String savedPin = sharedPreferences.getString("pincode_" + user.getUid() + "_" + deviceName, null);
         return enteredPin.equals(savedPin);
     }
 
@@ -205,17 +210,19 @@ public class HomeFragment extends Fragment implements DeviceInteractionListener 
     }
 
     private void savePincode(String deviceName, String pincode) {
-        if (getContext() == null) return;
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (getContext() == null || user == null) return;
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("GnGSecurityPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("pincode_" + deviceName, pincode);
+        editor.putString("pincode_" + user.getUid() + "_" + deviceName, pincode);
         editor.apply();
     }
 
     private List<String> getDeviceList() {
-        if (getContext() == null) return new ArrayList<>();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (getContext() == null || user == null) return new ArrayList<>();
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("GnGSecurityPrefs", Context.MODE_PRIVATE);
-        String json = sharedPreferences.getString("deviceList", null);
+        String json = sharedPreferences.getString("deviceList_" + user.getUid(), null);
         if (json == null) {
             return new ArrayList<>();
         }
@@ -229,24 +236,26 @@ public class HomeFragment extends Fragment implements DeviceInteractionListener 
             return list;
         } catch (Exception e) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove("deviceList");
+            editor.remove("deviceList_" + user.getUid());
             editor.apply();
             return new ArrayList<>();
         }
     }
 
     private void saveDeviceList(List<String> list) {
-        if (getContext() == null) return;
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (getContext() == null || user == null) return;
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("GnGSecurityPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String json = new Gson().toJson(list);
-        editor.putString("deviceList", json);
+        editor.putString("deviceList_" + user.getUid(), json);
         editor.apply();
     }
 
     @Override
     public void onDeviceRemoved(String deviceName) {
-        if (deviceList == null || !isAdded()) return;
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (deviceList == null || !isAdded() || user == null) return;
         int index = deviceList.indexOf(deviceName);
         if (index != -1) {
             deviceList.remove(index);
@@ -254,7 +263,7 @@ public class HomeFragment extends Fragment implements DeviceInteractionListener 
             // Also remove the associated pincode
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("GnGSecurityPrefs", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove("pincode_" + deviceName);
+            editor.remove("pincode_" + user.getUid() + "_" + deviceName);
             editor.apply();
             
             if (adapter != null) {

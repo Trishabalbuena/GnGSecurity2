@@ -69,12 +69,6 @@ public class ProfileFragment extends Fragment {
             });
         }
 
-        // Clear SharedPreferences
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("GnGSecurityPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear(); // Clear all preferences on logout
-        editor.apply();
-
         // Redirect to LoginActivity
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -99,6 +93,8 @@ public class ProfileFragment extends Fragment {
             Toast.makeText(getContext(), "No user found to delete.", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        // TODO: Here you would also delete user data from your database (e.g. device list and pincodes)
 
         user.delete()
                 .addOnCompleteListener(task -> {
